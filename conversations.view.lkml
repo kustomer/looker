@@ -58,6 +58,7 @@ view: conversations {
     timeframes: [
       raw,
       time,
+      hour,
       date,
       week,
       month,
@@ -88,6 +89,7 @@ view: conversations {
       raw,
       time,
       date,
+      hour,
       week,
       month,
       quarter,
@@ -106,12 +108,18 @@ view: conversations {
     sql: ${TABLE}.message_count ;;
   }
 
+  measure: avg_conversation_message_count {
+    type: average
+    sql: ${TABLE}.message_count ;;
+  }
+
   dimension_group: modified {
     type: time
     timeframes: [
       raw,
       time,
       date,
+      hour,
       week,
       month,
       quarter,
@@ -171,6 +179,7 @@ view: conversations {
       raw,
       time,
       date,
+      hour,
       week,
       month,
       quarter,
@@ -199,8 +208,7 @@ view: conversations {
       customers.name,
       conversation_assigned_teams.count,
       conversation_assigned_users.count,
-      conversation_tags.count,
-      messages.count
+      conversation_tags.count
     ]
   }
 }
