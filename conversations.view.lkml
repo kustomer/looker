@@ -188,7 +188,7 @@ view: conversations {
     sql: ${TABLE}.updated_at ;;
   }
 
-  measure: outbound_message_count_avg {
+  measure: outbound_message_count_average {
     type: average
     sql: ${outbound_message_count}  ;;
   }

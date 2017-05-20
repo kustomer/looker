@@ -72,6 +72,33 @@ explore: conversations {
     sql_on: ${conversations.customer_id} = ${customers.id} ;;
     relationship: many_to_one
   }
+
+  join: conversation_tags {
+    type: left_outer
+    sql_on: ${conversations.id} = ${conversation_tags.conversation_id} ;;
+    relationship: one_to_many
+  }
+
+  join: tags {
+    type: left_outer
+    sql_on: ${conversation_tags.tag_id} = ${tags.id} ;;
+    relationship: many_to_one
+
+  }
+
+  join: conversation_assigned_teams {
+    type: left_outer
+    sql_on:  ${conversations.assigned_teams} = ${conversation_assigned_teams.team_id} ;;
+    relationship: one_to_many
+  }
+
+  join: teams {
+    type: left_outer
+    sql_on: ${conversation_assigned_teams.team_id} = ${teams.id} ;;
+    relationship: many_to_one
+
+  }
+
 }
 
 explore: customer_active_users {
