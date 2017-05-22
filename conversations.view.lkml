@@ -27,7 +27,6 @@ view: conversations {
     timeframes: [
       raw,
       time,
-      hour,
       date,
       week,
       month,
@@ -35,6 +34,12 @@ view: conversations {
       year
     ]
     sql: ${TABLE}.created_at ;;
+  }
+
+  dimension: created_hour {
+    type: date_hour
+    sql: ${TABLE}.created_at ;;
+
   }
 
   dimension: created_by {
