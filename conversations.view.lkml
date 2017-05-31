@@ -88,7 +88,6 @@ view: conversations {
     sql: ${TABLE}.first_response_response_time ;;
   }
 
-
   dimension:  time_to_first_response {
     sql: datediff(hours, ${created_raw}, ${first_response_sent_raw}) ;;
     type: number
@@ -98,8 +97,6 @@ view: conversations {
     sql: ${time_to_first_response} ;;
     value_format_name: decimal_2
   }
-
-
 
   dimension_group: first_response_sent {
     type: time
@@ -215,6 +212,12 @@ view: conversations {
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: average_time_to_first_response {
+    type: average
+    sql: ${time_to_first_response} ;;
+    value_format_name: decimal_2
   }
 
   # ----- Sets of fields for drilling ------
