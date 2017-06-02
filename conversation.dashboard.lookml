@@ -1,57 +1,19 @@
-- dashboard: conversation
+- dashboard: Conversation Dashboard
   layout: newspaper
   elements:
-  - name: Conversation Metrics
-    type: text
-    title_text: Conversation Metrics
-    subtitle_text: Looks from Conversation Objects in Kustomer
-    body_text: ''
-    row: 0
-    col: 0
-    width: 24
-    height: 2
-  - name: "# of Weekly Conversations"
-    label: "# of Weekly Conversations"
-    model: kustomer
-    explore: conversations
-    type: single_value
-    dimensions:
-    - conversations.count
-    - conversations.created_week
-    filters:
-      conversations.created_week: 2 weeks
-    sorts:
-    - conversations.created_week desc
-    limit: 500
-    column_limit: 50
-    custom_color_enabled: false
-    custom_color: forestgreen
-    show_single_value_title: true
-    show_comparison: true
-    comparison_type: progress_percentage
-    comparison_reverse_colors: false
-    show_comparison_label: false
-    hidden_fields:
-    single_value_title: Weekly Conversations
-    listen:
-      Date: conversations.created_date
-    note_state: collapsed
-    note_display: below
-    note_text: ''
-    row: 2
-    col: 12
-    width: 6
-    height: 4
   - name: Customers,  Conversations, Message Count (Daily)
     label: Customers,  Conversations, Message Count (Daily)
     model: kustomer
     explore: messages
     type: looker_line
-    dimensions:
+    fields:
     - messages.created_date
     - customers.count
     - messages.count
     - conversations.count
+    fill_fields:
+    - messages.created_date
+
     sorts:
     - messages.created_date
     limit: 500
@@ -95,24 +57,65 @@
     series_types: {}
     listen:
       Date: conversations.created_date
-    row: 9
+    row: 12
+    col: 0
+    width: 13
+    height: 5
+  - name: "# of Weekly Conversations"
+    label: "# of Weekly Conversations"
+    model: kustomer
+    explore: conversations
+    type: single_value
+    fields:
+    - conversations.count
+    - conversations.created_week
+    fill_fields:
+    - conversations.created_week
+    filters:
+      conversations.created_week: 2 weeks
+    sorts:
+    - conversations.created_week desc
+    limit: 500
+    column_limit: 50
+    custom_color_enabled: false
+    custom_color: forestgreen
+    show_single_value_title: true
+    show_comparison: true
+    comparison_type: progress_percentage
+    comparison_reverse_colors: false
+    show_comparison_label: false
+    hidden_fields:
+    single_value_title: Weekly Conversations
+    listen:
+      Date: conversations.created_date
+    note_state: collapsed
+    note_display: below
+    note_text: ''
+    row: 2
+    col: 11
+    width: 5
+    height: 6
+  - name: Conversation Metrics
+    type: text
+    title_text: Conversation Metrics
+    subtitle_text: Looks from Conversation Objects in Kustomer
+    body_text: ''
+    row: 0
     col: 0
     width: 24
-    height: 8
-  - name: Daily conversations by Tag - Chart
-    label: Daily conversations by Tag - Chart
+    height: 2
+  - name: Tag Usage, Last 4 Weeks - Chart
+    label: Tag Usage, Last 4 Weeks - Chart
     model: kustomer
     explore: conversations
     type: table
-    dimensions:
-    - conversations.created_date
+    fields:
+    - tags.name
     - conversations.count
-    - tags.name
-    pivots:
-    - tags.name
+    filters:
+      conversations.created_week: 4 weeks
     sorts:
-    - tags.name 0
-    - conversations.created_date
+    - conversations.count desc
     limit: 500
     column_limit: 50
     show_view_names: true
@@ -146,23 +149,31 @@
     show_totals_labels: false
     show_silhouette: false
     totals_color: "#808080"
+    value_labels: legend
+    label_type: labPer
+    show_null_points: true
+    point_style: circle
+    interpolation: linear
     series_types: {}
+    hidden_fields: []
     listen: {}
-    row: 17
-    col: 0
-    width: 9
-    height: 7
+    row: 14
+    col: 13
+    width: 11
+    height: 3
   - name: Daily Conversations by Tag
     label: Daily Conversations by Tag
     model: kustomer
     explore: conversations
     type: looker_column
-    dimensions:
+    fields:
     - conversations.created_date
     - conversations.count
     - tags.name
     pivots:
     - tags.name
+    fill_fields:
+    - conversations.created_date
     filters:
       conversations.created_date: 14 days
       tags.name: "-NULL"
@@ -194,21 +205,23 @@
     show_silhouette: false
     totals_color: "#808080"
     listen: {}
-    row: 17
-    col: 9
-    width: 9
-    height: 7
+    row: 8
+    col: 13
+    width: 11
+    height: 6
   - name: Conversations Created by Channel (weekly)
     label: Conversations Created by Channel (weekly)
     model: kustomer
     explore: conversations
     type: looker_column
-    dimensions:
+    fields:
     - conversations.created_week
     - conversations.channels
     - conversations.count
     pivots:
     - conversations.channels
+    fill_fields:
+    - conversations.created_week
     filters:
       conversations.created_week: 4 weeks
       conversations.channels: ''
@@ -298,8 +311,135 @@
     listen: {}
     row: 2
     col: 0
-    width: 12
-    height: 7
+    width: 11
+    height: 6
+  - name: Conversation Status by Week
+    label: Conversation Status by Week
+    model: kustomer
+    explore: conversations
+    type: looker_column
+    fields:
+    - conversations.created_week
+    - conversations.count
+    - conversations.status
+    pivots:
+    - conversations.status
+    fill_fields:
+    - conversations.created_week
+    filters:
+      conversations.created_time: 4 weeks
+    sorts:
+    - conversations.created_week desc
+    - conversations.status
+    limit: 500
+    column_limit: 50
+    stacking: normal
+    show_value_labels: true
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    limit_displayed_rows: false
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: true
+    show_silhouette: false
+    totals_color: "#808080"
+    show_null_points: true
+    point_style: circle
+    interpolation: linear
+    show_row_numbers: true
+    truncate_column_names: false
+    hide_totals: false
+    hide_row_totals: false
+    table_theme: editable
+    enable_conditional_formatting: false
+    conditional_formatting_ignored_fields: []
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    series_types: {}
+    hidden_fields: []
+    listen: {}
+    row: 2
+    col: 16
+    width: 8
+    height: 6
+  - name: Daily Inbound Conversation by Channel
+    label: Daily Inbound Conversation by Channel
+    model: kustomer
+    explore: conversations
+    type: table
+    fields:
+    - conversations.created_date
+    - conversations.channels
+    - conversations.count
+    pivots:
+    - conversations.channels
+    fill_fields:
+    - conversations.created_date
+    filters:
+      conversations.created_time: 4 days
+    sorts:
+    - conversations.count desc 0
+    - conversations.channels
+    limit: 500
+    column_limit: 50
+    listen: {}
+    row: 8
+    col: 0
+    width: 13
+    height: 4
+  - name: Conversations by Day
+    label: Conversations by Day
+    model: kustomer
+    explore: conversations
+    type: looker_column
+    fields:
+    - conversations.created_date
+    - conversations.count
+    fill_fields:
+    - conversations.created_date
+    sorts:
+    - conversations.created_date desc
+    limit: 500
+    column_limit: 50
+    stacking: ''
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    limit_displayed_rows: false
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: auto
+    y_axis_scale_mode: linear
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    listen: {}
+    row: 17
+    col: 0
+    width: 24
+    height: 4
   filters:
   - name: Date
     title: Date
@@ -309,3 +449,4 @@
     explore:
     field:
     listens_to_filters: []
+    allow_multiple_values: true
