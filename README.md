@@ -27,7 +27,9 @@ You may choose to build different views to capitalize on custom tags, custom obj
 We've focused the exploring in this Looker Block on typical metrics and measures you are looking to analyze in *conversations*, *customers*, and *users*.
 
 ## Dashboards
-In this Looker implementation of your Kustomer site, you'll see LookML for a conversations dashboard, a customers dashboard, and a users dashboard, roughly corresponding to the views in the block.
+In this Looker implementation of your Kustomer site, you'll see LookML for a conversations dashboard and a users dashboard, roughly corresponding to the views in the block.
+
+Each of these dashboards has sample Looks that demonstrate use of the Kustomer data for reporting - they are examples and will need to be customized for your implementation.
 
 ## What do I need to get started
 To get data into your Redshift database (or any other database you are using to power Looker), we recommend using either our Event Stream product, our REST API, or a combination of the two.
@@ -40,3 +42,5 @@ This is a reference implementation and not your final reporting instance. Certai
 Not included here are:
 - custom objects (Kobjects)
 - custom fields mapping to conversations or customers
+
+Please contact our team at support@kustomer.com to get assistance in mapping your custom object fields and custom objects to your Looker instance, or if you need help integrating Kustomer with Looker using a different database.
