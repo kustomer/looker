@@ -13,6 +13,7 @@
     - conversations.count
     fill_fields:
     - messages.created_date
+
     sorts:
     - messages.created_date
     limit: 500
@@ -156,10 +157,10 @@
     series_types: {}
     hidden_fields: []
     listen: {}
-    row: 22
+    row: 21
     col: 13
     width: 11
-    height: 3
+    height: 4
   - name: Daily Conversations by Tag
     label: Daily Conversations by Tag
     model: kustomer
@@ -207,7 +208,7 @@
     row: 16
     col: 13
     width: 11
-    height: 6
+    height: 5
   - name: Conversations Created by Channel (weekly)
     label: Conversations Created by Channel (weekly)
     model: kustomer
@@ -534,7 +535,7 @@
     series_colors: {}
     show_dropoff: false
     hide_legend: true
-    x_axis_reversed: false
+    x_axis_reversed: true
     reference_lines:
     - reference_type: line
       line_value: mean
@@ -683,6 +684,102 @@
     col: 11
     width: 13
     height: 8
+  - name: Conversations Avg Minutes to 1st Completion
+    label: Conversations Avg Minutes to 1st Completion
+    model: kustomer
+    explore: conversations
+    type: looker_line
+    fields:
+    - conversations.modified_week
+    - conversations.time_to_first_completion_m
+    - conversations.count
+    filters:
+      conversations.created_time: 6 weeks
+      conversations.status: done
+      conversations.time_to_first_completion: ">0"
+      conversations.count: ">0"
+    sorts:
+    - conversations.modified_week
+    limit: 100
+    column_limit: 50
+    dynamic_fields:
+    - table_calculation: avg_minutes_to_first_completion
+      label: Avg Minutes to First Completion
+      expression: "${conversations.time_to_first_completion_m}/${conversations.count}"
+      value_format:
+      value_format_name: decimal_2
+    stacking: ''
+    show_value_labels: false
+    label_density: 25
+    legend_position: center
+    x_axis_gridlines: false
+    y_axis_gridlines: true
+    show_view_names: true
+    limit_displayed_rows: false
+    y_axis_combined: true
+    show_y_axis_labels: true
+    show_y_axis_ticks: true
+    y_axis_tick_density: default
+    y_axis_tick_density_custom: 5
+    show_x_axis_label: true
+    show_x_axis_ticks: true
+    x_axis_scale: ordinal
+    y_axis_scale_mode: linear
+    show_null_points: true
+    point_style: none
+    interpolation: linear
+    ordering: none
+    show_null_labels: false
+    show_totals_labels: false
+    show_silhouette: false
+    totals_color: "#808080"
+    show_row_numbers: true
+    truncate_column_names: false
+    hide_totals: false
+    hide_row_totals: false
+    table_theme: editable
+    enable_conditional_formatting: false
+    conditional_formatting_ignored_fields: []
+    conditional_formatting_include_totals: false
+    conditional_formatting_include_nulls: false
+    hidden_fields:
+    - conversations.time_to_first_completion_m
+    series_types:
+      conversations.count: column
+    y_axes:
+    - label: ''
+      maxValue:
+      minValue:
+      orientation: left
+      showLabels: true
+      showValues: true
+      tickDensity: default
+      tickDensityCustom: 5
+      type: linear
+      unpinAxis: false
+      valueFormat:
+      series:
+      - id: conversations.count
+        name: Conversations Count
+    - label:
+      maxValue:
+      minValue:
+      orientation: right
+      showLabels: true
+      showValues: true
+      tickDensity: default
+      tickDensityCustom: 5
+      type: linear
+      unpinAxis: false
+      valueFormat:
+      series:
+      - id: avg_minutes_to_first_completion
+        name: Avg Minutes to First Completion
+    listen: {}
+    row:
+    col:
+    width:
+    height:
   filters:
   - name: Date
     title: Date
