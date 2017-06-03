@@ -203,11 +203,17 @@ view: conversations {
     sql: ${outbound_message_count}  ;;
   }
 
-  measure: time_to_first_completion {
-    type: sum_distinct
+  dimension: time_to_first_completion {
     sql: DATEDIFF(minutes,${created_raw}, ${modified_raw});;
+    type: number
     value_format_name: decimal_0
   }
+
+measure: time_to_first_completion_m {
+  type: number
+  sql: ${time_to_first_completion} ;;
+}
+
 
   measure: count {
     type: count
