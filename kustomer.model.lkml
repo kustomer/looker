@@ -24,6 +24,7 @@ explore: conversation_assigned_teams {
     sql_on: ${conversations.customer_id} = ${customers.id} ;;
     relationship: many_to_one
   }
+
 }
 
 explore: conversation_assigned_users {
