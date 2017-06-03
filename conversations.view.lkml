@@ -204,8 +204,9 @@ view: conversations {
   }
 
   measure: time_to_first_completion {
-    type: average
-    sql: DATEDIFF(minutes,${created_raw}::date, ${modified_raw}::date) ;;
+    type: sum_distinct
+    sql: DATEDIFF(minutes,${created_raw}, ${modified_raw});;
+    value_format_name: decimal_0
   }
 
   measure: count {
