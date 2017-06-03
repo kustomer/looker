@@ -203,6 +203,10 @@ view: conversations {
     sql: ${outbound_message_count}  ;;
   }
 
+  measure: time_to_first_completion {
+    type: average
+    sql: DATEDIFF(minutes,${created_raw}::date, ${updated_raw}::date) ;;
+  }
 
   measure: count {
     type: count
@@ -224,7 +228,9 @@ view: conversations {
       customers.name,
       conversation_assigned_teams.count,
       conversation_assigned_users.count,
-      conversation_tags.count
+      conversation_tags.count,
+      created_time,
+      modified_time
     ]
   }
 }
