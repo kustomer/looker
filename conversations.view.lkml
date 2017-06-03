@@ -205,7 +205,7 @@ view: conversations {
 
   measure: time_to_first_completion {
     type: average
-    sql: DATEDIFF(minutes,${created_raw}::date, ${updated_raw}::date) ;;
+    sql: DATEDIFF(minutes,${created_raw}::date, ${modified_raw}::date) ;;
   }
 
   measure: count {
@@ -230,7 +230,9 @@ view: conversations {
       conversation_assigned_users.count,
       conversation_tags.count,
       created_time,
-      modified_time
+      modified_time,
+      status
+
     ]
   }
 }
