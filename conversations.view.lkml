@@ -204,13 +204,13 @@ view: conversations {
   }
 
   dimension: time_to_first_completion {
-    sql: DATEDIFF(minutes,${created_raw}, ${modified_raw});;
+    sql: TO_NUMBER(DATEDIFF(minutes,${created_raw}, ${modified_raw}),'99');;
     type: number
     value_format_name: decimal_0
   }
 
 measure: time_to_first_completion_m {
-  type: number
+  type: sum_distinct
   sql: ${time_to_first_completion} ;;
 }
 
@@ -238,7 +238,9 @@ measure: time_to_first_completion_m {
       conversation_tags.count,
       created_time,
       modified_time,
-      status
+      status,
+      assigned_users.name,
+      assigned_teams.name
 
     ]
   }

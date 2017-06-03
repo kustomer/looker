@@ -7,6 +7,12 @@ view: conversation_assigned_teams {
     sql: ${TABLE}.conversation_id ;;
   }
 
+  dimension: team_name {
+    type: string
+    sql: ${teams.name} ;;
+
+  }
+
   dimension: team_id {
     type: string
     # hidden: yes
