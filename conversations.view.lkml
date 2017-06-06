@@ -204,20 +204,45 @@ view: conversations {
   }
 
   dimension: time_to_first_completion {
-    sql: TO_NUMBER(DATEDIFF(minutes,${created_raw}, ${modified_raw}),'99');;
+    sql: CASE WHEN ${status} = 'done' THEN TO_NUMBER(DATEDIFF(minutes,${created_raw}, ${modified_raw}),'99') END;;
     type: number
     value_format_name: decimal_0
   }
 
-measure: time_to_first_completion_m {
-  type: sum_distinct
-  sql: ${time_to_first_completion} ;;
-}
+  dimension: time_to_first_completion_tier {
+    type: tier
+    tiers: [1,3,5,10,15,30]
+    style: integer
+    sql: ${time_to_first_completion} ;;
+  }
+
+  measure: average_time_to_first_completion {
+    type: average
+    sql: ${time_to_first_completion} ;;
+  }
 
 
   measure: count {
     type: count
     drill_fields: [detail*]
+  }
+
+  measure: count_done {
+    type:  count
+    drill_fields: [detail*]
+    filters: {
+      field: status
+      value: "done"
+    }
+  }
+
+  measure: count_snoozed {
+    type:  count
+    drill_fields: [detail*]
+    filters: {
+      field: status
+      value: "snoozed"
+    }
   }
 
   measure: average_time_to_first_response {
