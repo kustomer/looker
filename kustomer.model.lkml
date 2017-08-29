@@ -1,6 +1,7 @@
 connection: "prod1datastreamdemo"
 # connection: "prod1-data-stream"
 
+persist_for: "24 hours"
 
 
 # include all the views
