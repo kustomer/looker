@@ -1,4 +1,7 @@
-connection: "prod1-data-stream"
+connection: "prod1datastreamdemo"
+# connection: "prod1-data-stream"
+
+
 
 # include all the views
 include: "*.view"
