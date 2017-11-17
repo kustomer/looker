@@ -32,7 +32,7 @@ In this Looker implementation of your Kustomer site, you'll see LookML for a con
 Each of these dashboards has sample Looks that demonstrate use of the Kustomer data for reporting - they are examples and will need to be customized for your implementation.
 
 ## What do I need to get started
-To get data into your Redshift database (or any other database you are using to power Looker), we recommend using either our Event Stream product, our REST API, or a combination of the two.
+To get data into your Redshift database (or any other database you are using to power Looker), we recommend using either our Event Stream product, our REST API, or a combination of the two. [Snowflake](https://www.snowflake.net/) integration coming soon!
 
 To learn more about the object structure behind Kustomer and to review the API, check out http://dev.kustomer.com or our help site at http://help.kustomer.com.
 
